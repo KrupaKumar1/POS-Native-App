@@ -1,72 +1,96 @@
 import React from 'react';
-import {View, Image, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
-const MenuItemCard = () => {
+const MenuItemCard = ({title, content}) => {
   return (
-    <View style={styles.card}>
-      <View style={styles.cardContent}>
+    <View style={styles.cardContainer}>
+      <View style={styles.card}>
         <Image
-          source={{
-            uri: 'https://www.freepik.com/premium-photo/shahi-paneer_41622825.htm#query=food&position=18&from_view=keyword&track=sph&uuid=4303a787-79b4-40d5-9934-a72926502677',
-          }}
-          style={styles.cardImage}
-          resizeMode="cover"
+          style={styles.menuItemImage}
+          source={require('../assets/images/dessert.jpg')}
         />
-        <Text style={styles.cardTitle}>Title</Text>
-        <Text style={styles.cardDescription}>Description</Text>
-        <TouchableOpacity style={styles.addButton}>
-          <Text style={styles.addButtonText}>Add</Text>
-        </TouchableOpacity>
+        <View style={styles.itemDetailsContainer}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.content}>{content}</Text>
+          <View style={styles.buttonscontainer}>
+            <Text style={styles.moreDetailsText}>{`More Details >`}</Text>
+            <TouchableOpacity style={styles.roundedButton}>
+              <Text style={styles.buttonText}>Add</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  cardContainer: {
     width: '100%',
-    borderRadius: 10,
+    height: 130,
+    marginVertical: 10,
+    borderRadius: 20,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 5,
-    marginBottom: 16,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
-  cardImage: {
-    width: 80,
-    height: 80,
-  },
-  cardContent: {
+  card: {
     flex: 1,
     flexDirection: 'row',
-    padding: 16,
+    backgroundColor: 'white',
   },
-  cardTitle: {
+  menuItemImage: {
+    height: null,
+    width: 150,
+  },
+  itemDetailsContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    padding: 2,
+    margin: 10,
+  },
+  title: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 10,
   },
-  cardDescription: {
-    fontSize: 14,
-    marginBottom: 8,
+  content: {
+    fontSize: 16,
   },
-  addButton: {
-    backgroundColor: '#333',
-    paddingVertical: 16,
-    paddingHorizontal: 20,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    justifyContent: 'center',
+  buttonscontainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
-  addButtonText: {
-    color: '#fff',
-    fontSize: 6,
+  moreDetailsText: {
+    fontSize: 13,
+    color: '#333',
+  },
+  roundedButton: {
+    backgroundColor: '#ff9500',
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 13,
   },
 });
 

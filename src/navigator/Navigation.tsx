@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import OrderDashboard from '../screens/OrderDashboard';
 import LoginPage from '../screens/LoginPage';
 import OtpPage from '../screens/OtpPage';
+import MenuItems from '../screens/MenuItems';
 
 const Stack = createNativeStackNavigator();
 
@@ -20,16 +21,23 @@ const Navigation = () => {
       <Stack.Screen
         name="OtpPage"
         options={{
-          headerShown: true,
+          headerShown: false,
         }}
         component={OtpPage}
       />
       <Stack.Screen
         name="OrderDashboard"
         options={{
-          headerShown: true,
+          headerShown: false,
         }}
         component={OrderDashboard}
+      />
+      <Stack.Screen
+        name="MenuItems"
+        options={{
+          headerShown: false,
+        }}
+        component={MenuItems}
       />
     </Stack.Navigator>
   );

@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  SafeAreaView,
 } from 'react-native';
 import Footer from '../components/Footer';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 // ... (Your other imports)
 
@@ -38,41 +40,59 @@ const OtpPage = ({navigation}) => {
   const otpInputs = Array.from({length: 4}, (_, index) => null);
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={{
-          uri: 'https://verasquare.in/0daf71ab0d56753aaec0c776aabb0c08.png',
-        }}
-        style={styles.logo}
+    <SafeAreaView style={styles.mainContainer}>
+      <Icon
+        style={styles.backIcon}
+        name="arrowleft"
+        onPress={() => navigation.goBack()}
+        size={30}
+        color="black"
       />
+      <View style={styles.container}>
+        <Image
+          source={{
+            uri: 'https://verasquare.in/0daf71ab0d56753aaec0c776aabb0c08.png',
+          }}
+          style={styles.logo}
+        />
 
-      <Text style={styles.headerText}>Enter PIN</Text>
-      <View style={styles.otpContainer}>
-        {otp.map((digit, index) => (
-          <TextInput
-            key={index}
-            ref={(input) => (otpInputs[index] = input)}
-            style={styles.otpInput}
-            keyboardType="numeric"
-            maxLength={1}
-            value={digit}
-            onChangeText={(text) => handleInputChange(index, text)}
-          />
-        ))}
+        <Text style={styles.headerText}>Enter PIN</Text>
+        <View style={styles.otpContainer}>
+          {otp.map((digit, index) => (
+            <TextInput
+              key={index}
+              ref={(input) => (otpInputs[index] = input)}
+              style={styles.otpInput}
+              keyboardType="numeric"
+              maxLength={1}
+              value={digit}
+              onChangeText={(text) => handleInputChange(index, text)}
+            />
+          ))}
+        </View>
+        <TouchableOpacity style={styles.button} onPress={handleVerification}>
+          <Text style={styles.buttonText}>Verify OTP</Text>
+        </TouchableOpacity>
+        <Footer />
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleVerification}>
-        <Text style={styles.buttonText}>Verify OTP</Text>
-      </TouchableOpacity>
-      <Footer />
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default OtpPage;
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  backIcon: {
+    padding: 14,
+  },
+
   container: {
     flex: 1,
+    maxHeight: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,

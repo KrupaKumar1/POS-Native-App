@@ -1,26 +1,60 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Header from '../components/Header';
+import MenuItemCard from '../components/MenuItemCard';
 
-const MenuItems = () => {
+const MenuItems = ({navigation}) => {
   return (
-    <View style={styles.header}>
-      <TouchableOpacity onPress={() => console.log('Back pressed')}>
-        <Icon name="arrow-back" size={30} color="black" />
-      </TouchableOpacity>
-      <Text style={styles.menuText}>Menu Items</Text>
-      <View style={styles.filterIconContainer}>
-        <TouchableOpacity onPress={() => console.log('Filter pressed')}>
-          <Icon name="filter" size={30} color="black" />
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => console.log('Back pressed')}>
+          <Icon
+            name="arrow-back"
+            onPress={() => navigation.goBack()}
+            size={30}
+            color="black"
+          />
         </TouchableOpacity>
+        <Text style={styles.menuText}>Menu Items</Text>
+        <View style={styles.filterIconContainer}>
+          <TouchableOpacity onPress={() => console.log('Filter pressed')}>
+            <Icon name="filter" size={30} color="black" />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+      <View style={styles.orderContainer}>
+        <MenuItemCard
+          title="Chicken Burger"
+          content="Chicken burger with Extra Cheese"
+        />
+        <MenuItemCard
+          title="Paneer Biriyani"
+          content="Paneer Biriyani with Extra Cheese"
+        />
+        <MenuItemCard
+          title="Mutton Bitiyani"
+          content="Mutton Bitiyani with Extra Cheese"
+        />
+        <MenuItemCard title="Chicken" content="Chicken with Extra Cheese" />
+      </View>
+    </SafeAreaView>
   );
 };
 
 export default MenuItems;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -34,5 +68,12 @@ const styles = StyleSheet.create({
   },
   filterIconContainer: {
     marginLeft: 'auto',
+  },
+  orderContainer: {
+    flex: 1,
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: 10,
   },
 });

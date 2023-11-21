@@ -13,10 +13,12 @@ import OrderBottomTabBar from './OrdersBottomTab';
 import GlobalButton from '../components/GlobalButton';
 import MenuItemCard from '../components/MenuItemCard';
 import Header from '../components/Header';
+import OrderCard from '../components/OrderCard';
 
-const OrderDashboard = () => {
+const OrderDashboard = ({navigation}) => {
   const handleButtonPress = () => {
     // Your button press logic here
+    navigation.navigate('MenuItems');
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -43,7 +45,27 @@ const OrderDashboard = () => {
         onPress={handleButtonPress}
         disabled={false}
       />
-      <MenuItemCard />
+      <View style={styles.orderContainer}>
+        <OrderCard
+          orderNumber="2023-05-001"
+          paid="Paid"
+          username="Krupa Kumar"
+          preparingTime="20 min"
+        />
+        <OrderCard
+          orderNumber="2023-05-002"
+          paid="Unpaid"
+          username="Anand Singh"
+          preparingTime="20 min"
+        />
+        <OrderCard
+          orderNumber="2023-05-003"
+          paid="Paid"
+          username="Kumar"
+          preparingTime="10 min"
+        />
+      </View>
+
       {/*Recieved */}
       {/* Preparing*/}
       {/* Completed */}
@@ -76,6 +98,13 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     paddingRight: 10,
+  },
+  orderContainer: {
+    flex: 1,
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: 10,
   },
   newOrderButton: {
     backgroundColor: '#ff9500',

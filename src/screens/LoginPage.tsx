@@ -9,17 +9,28 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 import Footer from '../components/Footer';
-
 // ... (Your other imports)
 
 const LoginPage = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Email is required'),
+    password: Yup.string()
+      .min(8, 'Password must be at least 8 characters')
+      // .matches(
+      //   /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]/,
+      //   'Password must include at least one lowercase letter, one uppercase letter, one number, and one special character',
+      // )
+      .required('Password is required'),
+  });
 
-  const handleEmailLogin = () => {
+  const handleEmailLogin = (values) => {
     // Handle your email/password authentication logic
-    console.log('Email:', email, 'Password:', password);
+    console.log('Email:', values.email, 'Password:', values.password);
     navigation.navigate('OtpPage');
   };
 
@@ -36,33 +47,56 @@ const LoginPage = ({navigation}) => {
           style={styles.logo}
         />
       </View>
+      <Formik
+        initialValues={{email: '', password: ''}}
+        validationSchema={validationSchema}
+        onSubmit={(values) => handleEmailLogin(values)}>
+        {({
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+        }) => (
+          <>
+            {/* Email Input */}
 
-      {/* Email Input */}
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        onChangeText={(text) => setEmail(text)}
-      />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              value={values.email}
+            />
+            {touched.email && errors.email && (
+              <Text style={styles.errorText}>{errors.email}</Text>
+            )}
 
-      {/* Password Input */}
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        onChangeText={(text) => setPassword(text)}
-      />
+            {/* Password Input */}
+            <TextInput
+              style={styles.input}
+              placeholder="Password"
+              secureTextEntry
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              value={values.password}
+            />
+            {touched.password && errors.password && (
+              <Text style={styles.errorText}>{errors.password}</Text>
+            )}
 
-      {/* Login Button */}
-      <TouchableOpacity style={styles.loginButton} onPress={handleEmailLogin}>
-        <Text style={styles.loginButtonText}>Log In</Text>
-      </TouchableOpacity>
-
+            {/* Login Button */}
+            <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
+              <Text style={styles.loginButtonText}>Log In</Text>
+            </TouchableOpacity>
+          </>
+        )}
+      </Formik>
       {/* Forgot Password */}
       <TouchableOpacity>
         <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
-
       <Footer />
     </KeyboardAvoidingView>
   );
@@ -88,6 +122,13 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     resizeMode: 'contain',
+  },
+
+  errorText: {
+    color: 'red',
+    marginBottom: 4,
+    marginTop: -8, // To provide a bit of spacing between the input and error text
+    alignSelf: 'flex-start', // Align the error text to the left
   },
   input: {
     height: 50,
