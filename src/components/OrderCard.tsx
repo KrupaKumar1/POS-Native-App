@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   paidStatus: {
-    backgroundColor: 'green',
+    backgroundColor: '#39e600',
     width: 80,
     height: 25,
     padding: 5,

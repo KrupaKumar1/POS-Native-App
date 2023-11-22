@@ -9,10 +9,50 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Header from '../components/Header';
 import MenuItemCard from '../components/MenuItemCard';
+import {FlashList} from '@shopify/flash-list';
+
+const DATA = [
+  {
+    title: 'Chicken Burger',
+    content: 'Chicken burger with Extra Cheese',
+  },
+  {
+    title: 'Paneer Biriyani',
+    content: 'Paneer Biriyani with Extra Onions',
+  },
+  {
+    title: 'Mutton Bitiyani',
+    content: 'Mutton Bitiyani with Extra Rita',
+  },
+  {
+    title: 'Chicken Tandoori',
+    content: 'Extra Spicy',
+  },
+  {
+    title: 'Chicken Tikka',
+    content: 'Chicken Tikka Extra Spicy',
+  },
+  {
+    title: 'Paneer Biriyani',
+    content: 'Paneer Biriyani with Extra Onions',
+  },
+  {
+    title: 'Paneer Biriyani',
+    content: 'Paneer Biriyani with Extra Onions',
+  },
+  {
+    title: 'Paneer Biriyani',
+    content: 'Paneer Biriyani with Extra Onions',
+  },
+  {
+    title: 'Paneer Biriyani',
+    content: 'Paneer Biriyani with Extra Onions',
+  },
+];
 
 const MenuItems = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => console.log('Back pressed')}>
@@ -31,21 +71,15 @@ const MenuItems = ({navigation}) => {
         </View>
       </View>
       <View style={styles.orderContainer}>
-        <MenuItemCard
-          title="Chicken Burger"
-          content="Chicken burger with Extra Cheese"
+        <FlashList
+          data={DATA}
+          renderItem={({item}) => (
+            <MenuItemCard title={item.title} content={item.content} />
+          )}
+          estimatedItemSize={200}
         />
-        <MenuItemCard
-          title="Paneer Biriyani"
-          content="Paneer Biriyani with Extra Cheese"
-        />
-        <MenuItemCard
-          title="Mutton Bitiyani"
-          content="Mutton Bitiyani with Extra Cheese"
-        />
-        <MenuItemCard title="Chicken" content="Chicken with Extra Cheese" />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -72,8 +106,6 @@ const styles = StyleSheet.create({
   orderContainer: {
     flex: 1,
     width: '100%',
-    flexDirection: 'column',
-    alignItems: 'center',
     padding: 10,
   },
 });

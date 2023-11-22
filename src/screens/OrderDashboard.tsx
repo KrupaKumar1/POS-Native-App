@@ -21,7 +21,7 @@ const OrderDashboard = ({navigation}) => {
     navigation.navigate('MenuItems');
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header />
       <View style={styles.header}>
         <Text style={styles.menuText}>Orders</Text>
@@ -70,7 +70,7 @@ const OrderDashboard = ({navigation}) => {
       {/* Preparing*/}
       {/* Completed */}
       <OrderBottomTabBar />
-    </SafeAreaView>
+    </View>
   );
 };
 
